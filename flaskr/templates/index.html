@@ -3,6 +3,7 @@
     <head>
         <meta charset = "UTF-8">
         <title>taiseiアプリ</title>
+        <link rel="stylesheet" href="{{url_for('static', filename='style.css') }}">
     </head>
     <body>
         <h1>taisei書店</h1>
@@ -20,9 +21,9 @@
                     </tr>
                     {% for book in books %}
                         <tr>
-                            <td>タイトル：{{book.title}}</td> <!--bookというオブジェクトの中のtitleというキー  -->
-                            <td>金額：{{book.price}}円</td>
-                            <td>入荷日：{{book.arrival_day}}</td>
+                            <td>{{book.arrival_day}}</td> <!--bookというオブジェクトの中のtitleというキー  -->
+                            <td>{{book.title}}</td>
+                            <td>{{book.price}}円</td>
                         </tr>
                     {% endfor %}
                 </table>
