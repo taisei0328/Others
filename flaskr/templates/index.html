@@ -22,7 +22,7 @@
                     {% for book in books %}
                         <tr>
                             <td>{{book.arrival_day}}</td> <!--bookというオブジェクトの中のtitleというキー  -->
-                            <td>{{book.title}}</td>
+                            <td><a href="{{ url_for('edit', id=book['id']) }}">{{ book['title'] }}</a></td>　<!--タイトルだけハイパーリンク化して編集できるようにする-->
                             <td>{{book.price}}円</td>
                         </tr>
                     {% endfor %}

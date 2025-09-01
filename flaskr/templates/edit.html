@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="utf-8">
+    <title>書籍の編集・削除</title>
+</head>
+<body>
+    <h1>書籍の編集</h1>
+    <form action="{{ url_for('update') }}" method="POST"><!--main.pyにあるupdateという名前の関数に対応するURLを生成して、ここに設定してください,POSTはサーバー側の情報を変更するとき-->
+        <input type="hidden" name="id" value="{{ book['id'] }}"> <!--ユーザーからは見えないがサーバーにデータを送信するためにつくっておく、ユーザーがフォームの「更新」ボタンや「削除」ボタンを押すと、この隠しフィールドのidも一緒にサーバーに送られる-->
+        <p>タイトル: <input type="text" name="title" value="{{ book['title'] }}"></p>
+        <p>価格: <input type="number" name="price" value="{{ book['price'] }}"></p>
+        <p>入荷日: <input type="text" name="arrival_day" value="{{ book['arrival_day'] }}"></p>
+        <p><input type="submit" value="更新"></p><!--更新ボタンでPOSTをmainへとばす-->
+    </form>
+
+
+    <form action="{{ url_for('delete') }}" method="POST"><!--main.pyにあるupdateという名前の関数に対応するURLを生成して、ここに設定してください,POSTはサーバー側の情報を変更するとき-->
+        <input type="hidden" name="id" value="{{ book['id'] }}">
+        <p><input type="submit" value="削除"></p><!--削除ボタンでPOSTをmainへとばす-->
+    </form>
+  
+</body>
+</html>
