@@ -2,82 +2,87 @@ from flaskr import app
 from flask import render_template, request, redirect, url_for
 import sqlite3
 
-DATABASE = 'database.db'
+DATABASE = "database.db"
 
-@app.route('/')
+
+@app.route("/")
 def index():
     con = sqlite3.connect(DATABASE)
     con.row_factory = sqlite3.Row
-    db_books = con.execute("SELECT * FROM books").fetchall()
+    db_recipes = con.execute("SELECT * FROM recipes").fetchall()
     con.close()
 
-    return render_template(
-        'index.html',
-        books=db_books
-    )
+    return render_template("index.html", recipes=db_recipes)
 
-@app.route('/form')
+
+@app.route("/form")
 def form():
-    return render_template(
-        'form.html'
-    )
+    return render_template("form.html")
 
-@app.route('/edit')
+
+@app.route("/edit")
 def edit():
-    id = request.args.get('id', type=int)
+    id = request.args.get("id", type=int)
     if id is None:
-        return 'IDが指定されていません。'
+        return "IDが指定されていません。"
 
     con = sqlite3.connect(DATABASE)
     con.row_factory = sqlite3.Row
-    book = con.execute("SELECT * FROM books WHERE id = ?", (id,)).fetchone()
+    recipe = con.execute("SELECT * FROM recipes WHERE id = ?", (id,)).fetchone()
     con.close()
 
-    if book is None:
-        return '該当するデータが見つかりませんでした。'
+    if recipe is None:
+        return "該当するデータが見つかりませんでした。"
 
-    return render_template(
-        'edit.html',
-        book=book
-    )
+    return render_template("edit.html", recipe=recipe)
 
 
-@app.route('/register', methods=['POST'])
+@app.route("/register", methods=["POST"])
 def register():
-    title = request.form['title']
-    price = request.form['price']
-    arrival_day = request.form['arrival_day']
+    name = request.form["name"]
+    ingredients = request.form["ingredients"]
+    cooking_time = request.form["cooking_time"]
+    price = request.form["price"]
+    comment = request.form["comment"]
 
     con = sqlite3.connect(DATABASE)
-    con.execute('INSERT INTO books (title, price, arrival_day) VALUES(?,?,?)',
-    [title, price, arrival_day])
+    con.execute(
+        "INSERT INTO recipes (name, ingredients, cooking_time, price, comment) VALUES(?,?,?,?,?)",
+        [name, ingredients, cooking_time, price, comment],
+    )
     con.commit()
     con.close()
 
-    return redirect(url_for('index'))
+    return redirect(url_for("index"))
 
-@app.route('/update', methods=['POST'])  #/updateへのPOSTリクエストをedit.htmlから受け取る、以下のupdate()関数を実行
+
+@app.route("/update", methods=["POST"])
 def update():
-    id = request.form['id']
-    title = request.form['title']
-    price = request.form['price']
-    arrival_day = request.form['arrival_day']
-    
-    con = sqlite3.connect(DATABASE)
-    con.execute('UPDATE books SET title = ?, price = ?, arrival_day = ? WHERE id = ?',
-    [title, price, arrival_day, id])
-    con.commit()
-    con.close()
-    
-    return redirect(url_for('index'))
+    id = request.form["id"]
+    name = request.form["name"]
+    ingredients = request.form["ingredients"]
+    cooking_time = request.form["cooking_time"]
+    price = request.form["price"]
+    comment = request.form["comment"]
 
-@app.route('/delete', methods=['POST'])  #/updateへのPOSTリクエストをedit.htmlから受け取る、以下のupdate()関数を実行
-def delete():
-    id = request.form['id']
-    
     con = sqlite3.connect(DATABASE)
-    con.execute('DELETE FROM books WHERE id = ?', (id,))
+    con.execute(
+        "UPDATE recipes SET name = ?, ingredients = ?, cooking_time = ?, price = ?, comment = ? WHERE id = ?",
+        [name, ingredients, cooking_time, price, comment, id],
+    )
     con.commit()
     con.close()
-    
-    return redirect(url_for('index'))
+
+    return redirect(url_for("index"))
+
+
+@app.route("/delete", methods=["POST"])
+def delete():
+    id = request.form["id"]
+
+    con = sqlite3.connect(DATABASE)
+    con.execute("DELETE FROM recipes WHERE id = ?", (id,))
+    con.commit()
+    con.close()
+
+    return redirect(url_for("index"))

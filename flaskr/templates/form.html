@@ -6,23 +6,73 @@
         <link rel="stylesheet" href="{{url_for('static', filename='style.css') }}">
     </head>
     <body>
-        <h1>taisei書店</h1>
-        <form method='post' action="{{url_for('register')}}">　<!--ユーザーが入力したデータをサーバーへ-->
-        <table border="1">
+        <h1>taisei食堂 レシピ登録</h1>
+        <form method='post' action="{{url_for('register')}}" id="recipeForm" style="
+            max-width: 600px;
+            margin: 2em auto;
+            padding: 2em 2em 1em 2em;
+            background: #fff3e0;
+            border-radius: 1em;
+            box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+            font-size: 1.2em;
+        ">
+        <table style="width:100%; border-collapse:separate; border-spacing:0 1em;">
                 <tr>
-                    <th>入荷日</th>
-                    <th>タイトル</th>
-                    <th>金額</th>
+                    <th style="text-align:left; width:20%">料理名</th>
+                    <td><input type="text" name="name" style="width:90%; font-size:1.1em; padding:0.3em;"></td>
                 </tr>
-                    <tr>
-                        <td><input type="text" name="arrival_day"></td> 
-                        <td><input type="text" name="title"></td>
-                        <td><input type="text" name="price"></td>
-                    </tr>
+                <tr>
+                    <th style="text-align:left;">材料</th>
+                    <td>
+                        <div id="ingredients-list">
+                            <input type="text" name="ingredient" class="ingredient-input ingredient-style">
+                        </div>
+                        <button type="button" onclick="addIngredient()" style="font-size:1em; padding:0.3em 1em; background:#ff9800; color:#fff; border:none; border-radius:0.3em; margin-top:0.3em;">＋増やす</button>
+                        <input type="hidden" name="ingredients" id="ingredients-hidden">
+                    </td>
+                </tr>
+                <tr>
+                    <th style="text-align:left;">調理時間</th>
+                    <td><input type="text" name="cooking_time" style="width:60%; font-size:1.1em; padding:0.3em;"></td>
+                </tr>
+                <tr>
+                    <th style="text-align:left;">金額</th>
+                    <td><input type="number" name="price" step="0.01" style="width:40%; font-size:1.1em; padding:0.3em;"> 円</td>
+                </tr>
+                <tr>
+                    <th style="text-align:left; vertical-align:top;">コメント</th>
+                    <td><textarea name="comment" rows="3" cols="40" style="width:95%; font-size:1.1em; padding:0.5em;"></textarea></td>
+                </tr>
         </table>
-        <br>
-        <input type="submit" value="登録"> <!--inputの要素がsubmit(送信)で名前は登録-->
+        <div style="text-align:center; margin-top:2em;">
+            <input type="submit" value="登録" style="font-size:1.3em; padding:0.7em 2.5em; background:#ff9800; color:#fff; border:none; border-radius:0.5em; font-weight:bold; box-shadow:0 2px 8px rgba(0,0,0,0.08);">
+        </div>
         </form>
+        <style>
+        .ingredient-style {
+            width:80%;
+            font-size:1.1em;
+            margin-bottom:0.3em;
+            box-sizing:border-box;
+            padding:0.3em;
+        }
+        </style>
+        <script>
+        function addIngredient() {
+            const list = document.getElementById('ingredients-list');
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.name = 'ingredient';
+            input.className = 'ingredient-input ingredient-style';
+            list.appendChild(document.createElement('br'));
+            list.appendChild(input);
+        }
+        document.getElementById('recipeForm').onsubmit = function() {
+            const ingredientInputs = document.querySelectorAll('.ingredient-input');
+            const ingredients = Array.from(ingredientInputs).map(i => i.value).filter(v => v).join(',');
+            document.getElementById('ingredients-hidden').value = ingredients;
+        };
+        </script>
     </body>
 
 </html>
