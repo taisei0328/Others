@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang = "ja">
+    <head>
+        <meta charset = "UTF-8">
+        <title>taiseiアプリ</title>
+        <link rel="stylesheet" href="{{url_for('static', filename='style.css') }}">
+    </head>
+    <body>
+        <h1>taisei食堂</h1>
+        <h2>レシピ一覧</h2>
+            {% if recipes == [] %}
+                <p>まだレシピはありません</p>
+            {% else %}
+                <div style="display:flex; flex-wrap:wrap; gap:2em; justify-content:center; margin-top:2em;">
+                {% for recipe in recipes %}
+                    <a href="{{ url_for('edit', id=recipe['id']) }}" class="recipe-card">
+                        <div class="recipe-card-inner">
+                            <span class="recipe-title">{{ recipe['name'] }}</span>
+                        </div>
+                    </a>
+                {% endfor %}
+                </div>
+                <style>
+                .recipe-card {
+                    display: block;
+                    text-decoration: none;
+                    color: #333;
+                    background: #fff3e0;
+                    border-radius: 1em;
+                    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+                    padding: 2em 2.5em;
+                    min-width: 180px;
+                    margin-bottom: 1em;
+                    transition: background 0.2s, box-shadow 0.2s;
+                }
+                .recipe-card:hover {
+                    background: #ffe0b2;
+                    box-shadow: 0 4px 20px rgba(0,0,0,0.13);
+                }
+                .recipe-title {
+                    font-size: 1.5em;
+                    font-weight: bold;
+                    letter-spacing: 0.05em;
+                    display: block;
+                    text-align: center;
+                }
+                </style>
+            {% endif %}
+            <a href="{{url_for('form')}}" style="
+                display: inline-block;
+                margin-top: 2em;
+                padding: 1em 2em;
+                font-size: 1.5em;
+                background: #ff9800;
+                color: #fff;
+                border-radius: 0.5em;
+                text-decoration: none;
+                font-weight: bold;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+                transition: background 0.2s;
+            " onmouseover="this.style.background='#e65100'" onmouseout="this.style.background='#ff9800'">
+                ＋ レシピ登録
+            </a>
+    </body>
+</html>

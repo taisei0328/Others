@@ -1,0 +1,86 @@
+h1 {
+    /* ------------------------------------- */
+    /* 基本的な配置と文字色 */
+    /* ------------------------------------- */
+    position: relative;
+    padding: 0.8em 1.5em; /* パディングを増やしてゆとりを持たせる */
+    color: #333; /* 文字色を少し濃いめに */
+    text-align: center; /* 中央寄せ */
+    font-family: 'Georgia', serif; /* フォントを少しクラシックなものに変更 */
+    font-size: 2.2em; /* フォントサイズを大きく */
+    letter-spacing: 0.05em; /* 文字間隔を少し広げる */
+    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.7); /* 白い影で文字を際立たせる */
+    
+    /* ------------------------------------- */
+    /* 背景と立体感 */
+    /* ------------------------------------- */
+    /* グラデーション背景 */
+    background: linear-gradient(to right, #e0f2f7, #c1e4f4, #e0f2f7);
+    
+    /* 複数の影で立体感を出す */
+    box-shadow: 
+        0px 0px 15px 5px rgba(0, 100, 200, 0.3), /* 広い青い影 */
+        0px 0px 0px 5px #cceeff, /* 外側の薄い水色の枠 */
+        inset 0px 0px 10px rgba(0, 0, 0, 0.1); /* 内側に少し影をつけて凹凸感 */
+    
+    /* キラキラしたボーダー（二重線とドット） */
+    border: double 5px #87cefa; /* 太めの二重線ボーダー */
+    border-radius: 10px; /* 角を少し丸くする */
+    overflow: hidden; /* :afterの要素がはみ出さないように */
+    
+    /* ------------------------------------- */
+    /* ホバーエフェクト（マウスを乗せた時の変化） */
+    /* ------------------------------------- */
+    transition: all 0.3s ease-in-out; /* スムーズなアニメーション */
+}
+
+h1:hover {
+    background: linear-gradient(to right, #c1e4f4, #e0f2f7, #c1e4f4); /* ホバーでグラデーションを反転 */
+    box-shadow: 
+        0px 0px 20px 8px rgba(0, 100, 200, 0.5), /* 影をより強く */
+        0px 0px 0px 5px #a8d4ff, /* 外側の枠を濃く */
+        inset 0px 0px 15px rgba(0, 0, 0, 0.2); /* 内側の影も強く */
+    transform: translateY(-2px); /* 少しだけ上に浮き上がる */
+}
+
+/* ------------------------------------- */
+/* 左上のリボン装飾 */
+/* ------------------------------------- */
+h1:after {
+    position: absolute;
+    content: '';
+    /* 以前よりも少し大きく、より目立つように調整 */
+    left: -10px; /* 左にずらす */
+    top: -10px; /* 上にずらす */
+    
+    /* 三角形を形成するボーダー */
+    border-width: 0 0 20px 20px; /* サイズを大きく */
+    border-style: solid;
+    /* 色を豪華なゴールド系に */
+    border-color: transparent transparent #ffd700; /* 下だけゴールド */
+    
+    /* 影をつけてより立体的に */
+    box-shadow: 
+        2px 2px 3px rgba(0,0,0,0.3), /* 深い影 */
+        inset 1px 1px 1px rgba(255,255,255,0.5); /* 内側にハイライト */
+    
+    /* 追加の装飾：小さな丸（リボンの鋲のようなイメージ） */
+    background: radial-gradient(circle at center, #fff 0%, #eee 50%, #ccc 100%); /* 小さな光沢 */
+    width: 8px; /* 鋲のサイズ */
+    height: 8px;
+    border-radius: 50%; /* 完全な丸 */
+    transform: rotate(-45deg); /* 斜めにする */
+    z-index: 1; /* h1の上に表示 */
+}
+
+h1:before { /* :afterの対として、もう一つのリボンを作成（オプション） */
+    position: absolute;
+    content: '';
+    left: -10px;
+    top: -10px;
+    border-width: 20px 0 0 20px; /* 逆方向の三角形 */
+    border-style: solid;
+    border-color: #f0e68c transparent transparent; /* 少し異なるゴールド */
+    box-shadow: 2px 2px 3px rgba(0,0,0,0.3);
+    z-index: 0; /* :afterの下に表示 */
+}

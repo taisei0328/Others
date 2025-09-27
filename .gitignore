@@ -1,0 +1,11 @@
+# .gitignore
+# 仮想環境を無視する
+venv/
+
+# Pythonが生成するキャッシュファイル
+__pycache__/
+*.pyc
+
+# 開発環境で一時的に生成されるファイルなど
+.vscode/
+.env

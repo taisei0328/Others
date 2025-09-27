@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="utf-8">
+    <title>レシピの編集・削除</title>
+</head>
+<body>
+    <h1>レシピ詳細</h1>
+    <div style="border:1px solid #ccc; padding:1em; margin-bottom:1em;">
+        <strong>料理名:</strong> {{ recipe['name'] }}<br>
+        <strong>材料:</strong> {{ recipe['ingredients'] }}<br>
+        <strong>調理時間:</strong> {{ recipe['cooking_time'] }}<br>
+        <strong>金額:</strong> {{ recipe['price'] }} 円<br>
+        <strong>コメント:</strong> {{ recipe['comment'] }}
+    </div>
+    <form action="{{ url_for('update') }}" method="POST">
+        <input type="hidden" name="id" value="{{ recipe['id'] }}">
+        <p>料理名: <input type="text" name="name" value="{{ recipe['name'] }}"></p>
+        <p>材料: <input type="text" name="ingredients" value="{{ recipe['ingredients'] }}"></p>
+        <p>調理時間: <input type="text" name="cooking_time" value="{{ recipe['cooking_time'] }}"></p>
+        <p>金額: <input type="number" name="price" step="0.01" value="{{ recipe['price'] }}"></p>
+        <p>コメント:<br><textarea name="comment" rows="3" cols="40">{{ recipe['comment'] }}</textarea></p>
+        <p><input type="submit" value="更新"></p>
+    </form>
+
+    <form action="{{ url_for('delete') }}" method="POST">
+        <input type="hidden" name="id" value="{{ recipe['id'] }}">
+        <p><input type="submit" value="削除"></p>
+    </form>
+  
+</body>
+</html>
